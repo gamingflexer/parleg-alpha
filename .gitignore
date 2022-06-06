@@ -5,6 +5,7 @@ __pycache__/
 .RealTimeObjectDetection
 # C extensions
 *.so
+data.txt
 
 # Distribution / packaging
 .Python
