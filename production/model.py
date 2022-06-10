@@ -1,14 +1,4 @@
-CURRENT_WORKSPACE_NAME = '/workspace'
-ROOT_PATH = '/Users/cosmos/Desktop/parleg-alpha/RealTimeObjectDetection'
-WORKSPACE_PATH = ROOT_PATH+'/Tensorflow/'+CURRENT_WORKSPACE_NAME
-SCRIPTS_PATH = ROOT_PATH+'/Tensorflow/scripts'
-APIMODEL_PATH = ROOT_PATH+'/Tensorflow/models'
-ANNOTATION_PATH = WORKSPACE_PATH+'/annotations'
-IMAGE_PATH = WORKSPACE_PATH+'/images'
-MODEL_PATH = WORKSPACE_PATH+'/models'
-PRETRAINED_MODEL_PATH = WORKSPACE_PATH+'/pre-trained-models'
-CONFIG_PATH = MODEL_PATH+'/my_ssd_mobnet/pipeline.config'
-CHECKPOINT_PATH = MODEL_PATH+'/my_ssd_mobnet/'
+from config import * 
 
 import os
 import sys
@@ -25,11 +15,6 @@ from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as viz_utils
 from object_detection.builders import model_builder
 
-
-os.environ['PYTHONPATH'] += "/Users/cosmos/Desktop/parleg-alpha/RealTimeObjectDetection/Tensorflow/models"
-
-
-sys.path.append( "/Users/cosmos/Desktop/parleg-alpha/RealTimeObjectDetection/Tensorflow/models")
 
 # Load pipeline config and build a detection model
 configs = config_util.get_configs_from_pipeline_file(CONFIG_PATH)
@@ -52,9 +37,18 @@ dataset = 'Valour3'
 frameNo = '62'
 
 
-def detect(frame):
-    img = imread(frame)
+def detect_part(image_path):
+    
+    #crop
+    
+    coordinates = []
+    max_boxes_to_draw = 5
+    min_score_thresh=.3
+
+
+    img = imread(image_path)
     # print(type(img))
+    
 
     image_np = np.array(img)
     # print(type(image_np))
@@ -73,44 +67,39 @@ def detect(frame):
     # detection_classes should be ints.
     detections['detection_classes'] = detections['detection_classes'].astype(np.int64)
 
-    label_id_offset = 1
-    image_np_with_detections = image_np.copy()
-
-    viz_utils.visualize_boxes_and_labels_on_image_array(
-                image_np_with_detections,
-                detections['detection_boxes'],
-                detections['detection_classes']+label_id_offset,
-                detections['detection_scores'],
-                category_index,
-                use_normalized_coordinates=True,
-                max_boxes_to_draw=5,
-                min_score_thresh=.3,
-                agnostic_mode=False)
-
-    imgout = Image.fromarray(image_np_with_detections, 'RGB')
-    imgout.save('output.png')
+    imgout = Image.fromarray(image_np, 'RGB')
     
+    #cropping
     
-    #Cordinates
-    coordinates = []
-    max_boxes_to_draw = 5
-    min_score_thresh=.3
     boxes = detections['detection_boxes']
     # max_boxes_to_draw = boxes.shape[0]
-
     scores = detections['detection_scores']
 
 
     for i in range(min(max_boxes_to_draw, boxes.shape[0])):
         if scores[i] > min_score_thresh:
             class_id = int(detections['detection_classes'][i] + 1)
+            box = boxes[i]
+            im_height = imgout.height
+            im_width = imgout.width
+            (ymin, xmin, ymax, xmax) = (box[0] * im_height, box[1] * im_width,
+                            box[2] * im_height, box[3] * im_width)
             coordinates.append({
-                "box": boxes[i],
+                "box": [int(xmin) , int(ymin) , int(xmax) ,int(ymax)],
                 "class_name": category_index[class_id]["name"],
                 "score": scores[i]
             })
-
-    print("Detection done")
-    return coordinates
+    return imgout,coordinates
 
 
+def translate_box(coordinates):
+    left,upper,right,lower = coordinates[0]['box']
+    for coordinate in coordinates:
+        if coordinate['class_name']=="arrow":
+            left,upper,right,lower = coordinate['box']
+            new_upper = upper - (lower-upper)
+            right = right + (right-left)*0.2
+            lower = lower - (lower-upper)
+            return (left,new_upper,right,lower)   
+        
+        

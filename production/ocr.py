@@ -1,14 +1,13 @@
 import easyocr
 import re
 
-
 text_reader = easyocr.Reader(['en']) #Initialzing the ocr
 
-def ocr(img_path):
+def ocr(img_array):
     
-    results = text_reader.readtext(img_path)
+    results = text_reader.readtext(img_array)
     data = []
-    finall = []
+    final = []
     for (bbox, text, prob) in results:
         data = data + [text]
 
@@ -18,4 +17,6 @@ def ocr(img_path):
             data.remove(i)
             
     final = [i for i in data if not i.isalpha()]
+    print(f"Orignal - {results}")
+    print(f"Final Code - {final}")
     return final

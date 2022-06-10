@@ -1,9 +1,10 @@
+from config import SAVING_FRAMES_PER_SECOND
+
 from datetime import timedelta
 import cv2
 import numpy as np
 import os
 
-SAVING_FRAMES_PER_SECOND = 1
 
 def format_timedelta(td):
     """Utility function to format timedelta objects in a cool way (e.g 00:00:20.05) 
@@ -27,6 +28,7 @@ def get_saving_frames_durations(cap, saving_fps):
     for i in np.arange(0, clip_duration, 1 / saving_fps):
         s.append(i)
     return s
+
 
 
 def main(video_file):
