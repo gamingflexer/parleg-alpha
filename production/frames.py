@@ -1,4 +1,4 @@
-from config import SAVING_FRAMES_PER_SECOND
+from config import SAVING_FRAMES_PER_SECOND,basepath
 
 from datetime import timedelta
 import cv2
@@ -31,12 +31,12 @@ def get_saving_frames_durations(cap, saving_fps):
 
 
 
-def main(video_file):
+def frames_maker(video_file):
     filename, _ = os.path.splitext(video_file)
     filename += "-opencv"
     # make a folder by the name of the video file
-    if not os.path.isdir(filename):
-        os.mkdir(filename)
+    # if not os.path.isdir(filename):
+    #     os.mkdir(filename)
     # read the video file    
     cap = cv2.VideoCapture(video_file)
     # get the FPS of the video
@@ -72,4 +72,6 @@ def main(video_file):
                 pass
         # increment the frame count
         count += 1
+    
+    return os.path.join(basepath,filename) 
 
