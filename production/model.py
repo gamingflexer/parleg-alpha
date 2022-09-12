@@ -1,5 +1,5 @@
 from config import * 
-
+import imutils
 import os
 import sys
 import cv2 
@@ -37,7 +37,7 @@ dataset = 'Valour3'
 frameNo = '62'
 
 
-def detect_part(image_path):
+def detect_part(image_np):
     
     #crop
     
@@ -45,15 +45,8 @@ def detect_part(image_path):
     max_boxes_to_draw = 5
     min_score_thresh=.3
 
-
-    img = imread(image_path)
-    # print(type(img))
-    
-
-    image_np = np.array(img)
-    # print(type(image_np))
-
     input_tensor = tf.convert_to_tensor(np.expand_dims(image_np, 0), dtype=tf.float32)
+    #print(input_tensor.shape)
     detections = detect_fn(input_tensor)
 
     num_detections = int(detections.pop('num_detections'))
@@ -63,7 +56,6 @@ def detect_part(image_path):
 
     # print(detections['detection_classes'])
     # print(type(detections['detection_classes']))
-
     # detection_classes should be ints.
     detections['detection_classes'] = detections['detection_classes'].astype(np.int64)
 
@@ -93,13 +85,16 @@ def detect_part(image_path):
 
 
 def translate_box(coordinates):
-    left,upper,right,lower = coordinates[0]['box']
-    for coordinate in coordinates:
-        if coordinate['class_name']=="arrow":
-            left,upper,right,lower = coordinate['box']
-            new_upper = upper - (lower-upper)
-            right = right + (right-left)*0.2
-            lower = lower - (lower-upper)
-            return (left,new_upper,right,lower)   
+    try:
+        left,upper,right,lower = coordinates[0]['box']
+        for coordinate in coordinates:
+            if coordinate['class_name']=="arrow":
+                left,upper,right,lower = coordinate['box']
+                new_upper = upper - (lower-upper)
+                right = right + (right-left)*0.2
+                lower = lower - (lower-upper)
+                return (left,new_upper,right,lower)
+    except:
+        pass 
         
         

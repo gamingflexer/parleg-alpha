@@ -35,8 +35,8 @@ def frames_maker(video_file):
     filename, _ = os.path.splitext(video_file)
     filename += "-opencv"
     # make a folder by the name of the video file
-    # if not os.path.isdir(filename):
-    #     os.mkdir(filename)
+    if not os.path.isdir(filename):
+        os.mkdir(filename)
     # read the video file    
     cap = cv2.VideoCapture(video_file)
     # get the FPS of the video
@@ -64,7 +64,7 @@ def frames_maker(video_file):
             # if closest duration is less than or equals the frame duration, 
             # then save the frame
             frame_duration_formatted = format_timedelta(timedelta(seconds=frame_duration))
-            cv2.imwrite(os.path.join(filename, f"frame{frame_duration_formatted}.jpg"), frame) 
+            cv2.imwrite(os.path.join(filename, f"frame{count}.jpg"), frame) 
             # drop the duration spot from the list, since this duration spot is already saved
             try:
                 saving_frames_durations.pop(0)
