@@ -63,7 +63,6 @@ def detection(video_path):
                         no_boxes.append(1)
             
             
-detection("/Users/cosmos/Desktop/Projects/parleg-alpha/video/2.mp4")
 
 def gen_frames(camera):  # generate frame by frame from camera
     while True:
@@ -97,7 +96,5 @@ def gen_frames(camera):  # generate frame by frame from camera
 
 
 
+# detection("/Users/cosmos/Desktop/Projects/parleg-alpha/video/2.mp4")
 
-# Append the output to a CSV
-
-# print output & option to tune the model by user
