@@ -37,7 +37,8 @@ def detection(video_path):
             image_final,cordinates_final = detect_part(image_np)
                 
             new_img = image_final.crop(translate_box(coordinates=cordinates_final))
-            
+            new_img.save('new'+file1)
+                        
             ## OCR
             ocr_outpout = ocr(np.array(new_img))
             try:
@@ -96,5 +97,5 @@ def gen_frames(camera):  # generate frame by frame from camera
 
 
 
-# detection("/Users/cosmos/Desktop/Projects/parleg-alpha/video/2.mp4")
+#detection("/Users/cosmos/Desktop/Projects/parleg-alpha/video/2.mp4")
 
