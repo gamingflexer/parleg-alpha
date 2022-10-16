@@ -2,10 +2,11 @@ from frames import *
 from model import *
 from ocr import *
 import numpy as np
-import csv   
+import sys
 
 total_boxes = []
 
+path_of_video = sys.argv[1]
 
 def sorted_nicely( l ): 
     convert = lambda text: int(text) if text.isdigit() else text 
@@ -89,4 +90,6 @@ def gen_frames(camera):  # generate frame by frame from camera
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
             
+            
+detection(str(path_of_video))
 
