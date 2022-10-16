@@ -4,7 +4,7 @@ This is a script to detect the code of a box in a Parleg box on conveyor belt. A
 
 # Installation
 
-[Follow the instructions] (https://www.youtube.com/watch?v=dZh_ps8gKgs)
+Follow the instructions (https://www.youtube.com/watch?v=dZh_ps8gKgs)
 
 # Usage
 
