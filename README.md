@@ -22,6 +22,20 @@ python app.py
 python test.py "path of the video"
 ```
 
+The video output is also saved in the ocr.txt file which looks like this
+
+```
+Next Box Coming
+'BOX 1'--> 8C681['8C681'] - frame210.jpg
+Next Box Coming
+
+Next Box Coming
+'BOX 2'--> BF821['BF821'] - frame510.jpg
+'BOX 3'--> BF824['BF824'] - frame540.jpg
+Next Box Coming
+```
+
+
 ## Demo
 
 ![Screenshot](production/figma/demo.png)
