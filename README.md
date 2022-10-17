@@ -13,12 +13,14 @@ Follow the instructions (https://www.youtube.com/watch?v=dZh_ps8gKgs)
 Starts a server at http://127.0.0.1:5000/ with the video stream and it prints the ocr outputs
 
 ```
+cd production
 python app.py
 ```
 
 ### Single Video
 
 ``` 
+cd production
 python test.py "path of the video"
 ```
 
