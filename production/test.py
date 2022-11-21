@@ -90,6 +90,6 @@ def gen_frames(camera):  # generate frame by frame from camera
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
             
-            
+#single video testing           
 detection(str(path_of_video))
 

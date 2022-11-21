@@ -26,12 +26,11 @@ def video_feed():
 @app.route('/start')
 def start_model():
     print("Model STARTED....")
-    # print(Video_path)
-    # detection(Video_path)
+    detection(Video_path)
     return render_template("test.html")
 
 
-@app.route('/stop')
+'''@app.route('/stop')
 def stop_model():
     print("Model STOPPED....")
     return render_template("index.html")
@@ -39,7 +38,7 @@ def stop_model():
 @app.route('/csv')
 def download_csv():
     print("Downloading CSV....")
-    return render_template("index.html")
+    return render_template("index.html")'''
 
 if __name__ == '__main__':
     app.run(debug=True)
