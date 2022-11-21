@@ -16,11 +16,8 @@ PRETRAINED_MODEL_PATH = WORKSPACE_PATH+'/pre-trained-models'
 CONFIG_PATH = MODEL_PATH+'/my_ssd_mobnet/pipeline.config'
 CHECKPOINT_PATH = MODEL_PATH+'/my_ssd_mobnet/'
 
-
-# os.environ['PYTHONPATH'] += "/Users/cosmos/Desktop/parleg-alpha/RealTimeObjectDetection/Tensorflow/models"
-
-
-sys.path.append( "/Users/cosmos/Desktop/Projects/parleg-alpha/RealTimeObjectDetection/Tensorflow/models")
+# append the object detection module to the sys path
+sys.path.append( "...add here .../RealTimeObjectDetection/Tensorflow/models")
 
 SAVING_FRAMES_PER_SECOND = 1
 
